@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SimpleFragment</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">SimpleList</string>
+    <string name="description">シンプルなリストの実装です。\nリストの増減が出来ます</string>
+
+
+</resources>

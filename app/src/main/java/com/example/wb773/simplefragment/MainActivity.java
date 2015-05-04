@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -59,8 +60,10 @@ public class MainActivity extends Activity {
     public static class PlaceholderFragment extends Fragment {
 
         private RecyclerView mRecyclerView;
-        private RecyclerView.Adapter mAdapter;
+        private MyAdapter mAdapter;
         private RecyclerView.LayoutManager mLayoutManager;
+
+        private ArrayList<MyAdapter.ViewItem> myDataset;
 
         public PlaceholderFragment() {
         }
@@ -77,18 +80,26 @@ public class MainActivity extends Activity {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             //テストデータ
-            ArrayList<MyAdapter.ViewItem> myDataset = new ArrayList<>();
+            myDataset = new ArrayList<>();
             myDataset.add(new MyAdapter.ViewItem("タイトル１", "内容１"));
             myDataset.add(new MyAdapter.ViewItem("タイトル２", "内容２"));
-            myDataset.add(new MyAdapter.ViewItem("タイトル３", "内容３"));
-            myDataset.add(new MyAdapter.ViewItem("タイトル４", "内容４"));
-            myDataset.add(new MyAdapter.ViewItem("タイトル５", "内容５"));
-            myDataset.add(new MyAdapter.ViewItem("タイトル６", "内容６"));
+
 
             // specify an adapter (see also next example)
             mAdapter = new MyAdapter(myDataset);
             mRecyclerView.setAdapter(mAdapter);
             mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+            //mRecyclerView.setClickable(true);
+
+            Button addButton = (Button)rootView.findViewById(R.id.add_button);
+            addButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    mAdapter.addItem(0,"タイトル６", "内容６");
+                }
+            });
 
             return rootView;
         }

@@ -1,6 +1,7 @@
 package com.example.wb773.simplefragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         return mViewItems.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+    public void addItem(Integer position,String title, String description){
+        mViewItems.add(position,new ViewItem(title,description));
+        notifyItemInserted(position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView title;
         public TextView desctiprion;
@@ -53,8 +60,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             super(itemView);
             title = (TextView)itemView.findViewById(R.id.title);
             desctiprion = (TextView)itemView.findViewById(R.id.description);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mViewItems.remove(getLayoutPosition());
+            notifyItemRemoved(getLayoutPosition());
+            Log.d("TAG" ,"onClick " + getLayoutPosition());
         }
     }
+
 
     public static class ViewItem {
         public ViewItem(String title, String description){

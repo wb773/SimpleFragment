@@ -81,11 +81,14 @@ public class MainActivity extends Activity {
             myDataset.add(new MyAdapter.ViewItem("タイトル１", "内容１"));
             myDataset.add(new MyAdapter.ViewItem("タイトル２", "内容２"));
             myDataset.add(new MyAdapter.ViewItem("タイトル３", "内容３"));
+            myDataset.add(new MyAdapter.ViewItem("タイトル４", "内容４"));
+            myDataset.add(new MyAdapter.ViewItem("タイトル５", "内容５"));
+            myDataset.add(new MyAdapter.ViewItem("タイトル６", "内容６"));
 
             // specify an adapter (see also next example)
             mAdapter = new MyAdapter(myDataset);
             mRecyclerView.setAdapter(mAdapter);
-
+            mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
 
             return rootView;
         }

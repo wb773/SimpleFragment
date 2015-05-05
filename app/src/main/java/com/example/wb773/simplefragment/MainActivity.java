@@ -2,7 +2,9 @@ package com.example.wb773.simplefragment;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -71,7 +74,7 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
@@ -96,8 +99,36 @@ public class MainActivity extends Activity {
 
                 @Override
                 public void onClick(View v) {
+                    // カスタムビューを設定
+                    LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(
+                            LAYOUT_INFLATER_SERVICE);
+                    final View layout = inflater.inflate(R.layout.input_dialog,
+                            (ViewGroup)rootView.findViewById(R.id.input_dialog_root));
 
-                    mAdapter.addItem(0,"タイトル６", "内容６");
+                    // アラーとダイアログ を生成
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("ダイアログタイトル");
+                    builder.setView(layout);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // OK ボタンクリック処理
+                            // ID と PASSWORD を取得
+                            EditText id
+                                    = (EditText) layout.findViewById(R.id.customDlg_id);
+                            EditText pass
+                                    = (EditText) layout.findViewById(R.id.customDlg_pass);
+                            mAdapter.addItem(0,id.getText().toString(), pass.getText().toString());
+
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Cancel ボタンクリック処理
+                        }
+                    });
+
+                    // 表示
+                    builder.create().show();
                 }
             });
 
